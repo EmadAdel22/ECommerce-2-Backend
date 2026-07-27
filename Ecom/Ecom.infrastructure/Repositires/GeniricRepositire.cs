@@ -3,44 +3,74 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Ecom.infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecom.infrastructure.Repositires
 {
-    internal class GeniricRepositire<T> : IGeniricRepositire<T> where T : class
+    public class GeniricRepositire<T> : IGeniricRepositire<T> where T : class
     {
-        public Task AddAsync(T entity)
+
+        private readonly AppDbContext _context;
+
+        public GeniricRepositire(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task Deletsync(int id)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task Deletsync(int id)
         {
-            throw new NotImplementedException();
+            var etentity = await _context.Set<T>().FindAsync(id);
+
+                _context.Set<T>().Remove(etentity);
+                await _context.SaveChangesAsync();
+            
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+        public async Task<IReadOnlyList<T>> GetAllAsync()
+        =>
+            await _context.Set<T>().AsNoTracking().ToListAsync();
+        
+
+        public async Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
         {
-            throw new NotImplementedException();
+            var query = _context.Set<T>().AsQueryable();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.ToListAsync();
         }
 
-        public Task<IReadOnlyList<T>> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Set<T>().FindAsync(id);
+            return entity;
+
         }
 
-        public Task<IReadOnlyList<T>> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
+        public async Task<T>GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _context.Set<T>();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            var entity = await query.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
+            return entity;
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }
