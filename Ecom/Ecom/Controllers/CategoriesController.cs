@@ -1,4 +1,6 @@
-﻿using Ecom.core.Entities.Products;
+﻿using AutoMapper;
+using Ecom.Api.Mapping;
+using Ecom.core.Entities.Products;
 using Ecom.core.Interfaces;
 using Ecom.infrastructure.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +11,7 @@ namespace Ecom.Api.Controllers
   
     public class CategoriesController : BaseController
     {
-        public CategoriesController(IUnitOfWork work) : base(work)
+        public CategoriesController(IUnitOfWork work , IMapper mapper) : base(work , mapper)
         {
 
         }
@@ -58,11 +60,8 @@ namespace Ecom.Api.Controllers
             try
             {
 
-                var category = new Category
-                {
-                    Name = categoryDTO.Name,
-                    Description = categoryDTO.Description
-                };
+                var category = mapper.Map<Category>(categoryDTO);
+
 
                 if (category == null)
                     return BadRequest();
@@ -81,13 +80,8 @@ namespace Ecom.Api.Controllers
         {
             try
             {
-                var category = new Category()
-                {
-                   
-                    Name = categoryDTO.Name,
-                    Description = categoryDTO.Description,
-                    Id = categoryDTO.Id
-                };
+                var category = mapper.Map<Category>(categoryDTO);
+
                 await work.categoryRepository.UpdateAsync(category);
                 return Ok(new { message = "category has been updated" });
             }

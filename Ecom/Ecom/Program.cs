@@ -18,6 +18,8 @@ namespace Ecom
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.InfrastructureCinfigration(builder.Configuration);
+            // builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
