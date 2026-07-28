@@ -97,6 +97,19 @@ namespace Ecom.Api.Controllers
             }
         }
 
+        [HttpDelete("delete-category/{id}")]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            try
+            {
+                await work.categoryRepository.Deletsync(id);
+                return Ok(new { message = "category has been deleted" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     } 
 }
