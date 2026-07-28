@@ -57,6 +57,7 @@ namespace Ecom.Api.Controllers
 
             try
             {
+
                 var category = new Category
                 {
                     Name = categoryDTO.Name,
