@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ecom.Api.Helper;
 using Ecom.Api.Mapping;
 using Ecom.core.Entities.Products;
 using Ecom.core.Interfaces;
@@ -23,7 +24,7 @@ namespace Ecom.Api.Controllers
             {
                 var categories = await work.categoryRepository.GetAllAsync();
                 if (categories == null)
-                    return BadRequest();
+                    return BadRequest(new ResponseAPI(400));
                 return Ok(categories);
 
             }
@@ -41,7 +42,7 @@ namespace Ecom.Api.Controllers
             {
                 var category = await work.categoryRepository.GetByIdAsync(id);
                 if (category == null)
-                    return BadRequest();
+                    return BadRequest(new ResponseAPI(400));
                 return Ok(category);
 
 
@@ -64,9 +65,9 @@ namespace Ecom.Api.Controllers
 
 
                 if (category == null)
-                    return BadRequest();
+                    return BadRequest(new ResponseAPI(400));
                 await work.categoryRepository.AddAsync(category);
-                return Ok(new { message="category has been created" });
+                return Ok(new ResponseAPI(200, "category has been created") );
 
             }
             catch (Exception ex)
@@ -83,7 +84,7 @@ namespace Ecom.Api.Controllers
                 var category = mapper.Map<Category>(categoryDTO);
 
                 await work.categoryRepository.UpdateAsync(category);
-                return Ok(new { message = "category has been updated" });
+                return Ok(new ResponseAPI(200, "category has been updated"));
             }
             catch (Exception ex)
             {
@@ -97,7 +98,7 @@ namespace Ecom.Api.Controllers
             try
             {
                 await work.categoryRepository.Deletsync(id);
-                return Ok(new { message = "category has been deleted" });
+                return Ok(new ResponseAPI(200, "category has been Deleted"));
             }
             catch (Exception ex)
             {
