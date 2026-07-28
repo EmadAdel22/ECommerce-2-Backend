@@ -6,7 +6,7 @@ using Ecom.core.Entities.Products;
 
 namespace Ecom.core.Interfaces
 {
-    public interface IProducRepository : IGeniricRepositire<Product>
+    public interface IProductRepository : IGeniricRepositire<Product>
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ecom.core.Interfaces
 {
-    public interface IPhotoReposatory:IGeniricRepositire<Photo>
+    public interface IPhotoRepository:IGeniricRepositire<Photo>
     {
     }
 }

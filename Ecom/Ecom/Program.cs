@@ -1,4 +1,4 @@
-
+using Ecom.infrastructure;
 namespace Ecom
 {
     public class Program
@@ -17,6 +17,7 @@ namespace Ecom
             // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.InfrastructureCinfigration(builder.Configuration);
 
             var app = builder.Build();
 
