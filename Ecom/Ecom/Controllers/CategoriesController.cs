@@ -76,5 +76,27 @@ namespace Ecom.Api.Controllers
             }
         }
 
+        [HttpPut("update-category")]
+        public async Task<IActionResult> UpdateCategory(CategoryUpdateDto categoryDTO)
+        {
+            try
+            {
+                var category = new Category()
+                {
+                   
+                    Name = categoryDTO.Name,
+                    Description = categoryDTO.Description,
+                    Id = categoryDTO.Id
+                };
+                await work.categoryRepository.UpdateAsync(category);
+                return Ok(new { message = "category has been updated" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
+
+    } 
 }

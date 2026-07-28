@@ -5,9 +5,8 @@ using System.Text;
 namespace Ecom.infrastructure.Dtos
 {
     public record CategoryDTo
-    (
-         string Name,
+        (string Name,string Description);
 
-     string Description
-    );
+    public record CategoryUpdateDto
+        (string Name,string Description, int Id);
 }
