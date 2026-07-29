@@ -14,14 +14,39 @@ namespace Ecom.infrastructure.Repositires.Services
         {
             _fileProvider = fileProvider;
         }
-        public Task<List<string>> AddImageAysnc(IFormFileCollection files, string src)
+        public async Task<List<string>> AddImageAysnc(IFormFileCollection files, string src)
         {
-            throw new NotImplementedException();
+            var SaveImagSrc = new List<string>();
+            var imageDirectory = Path.Combine("wwwroot", "Images", src);
+            if(Directory.Exists(imageDirectory) is not true)
+            {
+                Directory.CreateDirectory(imageDirectory);
+            }
+
+            foreach (var item in files)
+            {
+                if(item.Length > 0)
+                {
+                    var ImagName = item.FileName;
+                    var ImageSrc =  $"/Images/{src}/{ImagName}";
+                    var rootPath = Path.Combine(imageDirectory, ImagName);
+                    using (FileStream stream = new FileStream(rootPath, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+
+                    SaveImagSrc.Add(ImageSrc);
+                }
+
+            }
+            return SaveImagSrc;
         }
 
-        public Task DeletImageAsync(string src)
+        public void DeletImageAsync(string src)
         {
-            throw new NotImplementedException();
+            var info = _fileProvider.GetFileInfo(src);
+            var filePath = info.PhysicalPath;
+            File.Delete(filePath);
         }
     }
 }
