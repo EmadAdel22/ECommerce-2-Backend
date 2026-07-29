@@ -14,7 +14,7 @@ namespace Ecom.infrastructure.Data.Config
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Description).IsRequired();
 
-            builder.Property(x => x.Price).HasColumnType("decimal (18,2)");
+            builder.Property(x => x.NEwPrice).HasColumnType("decimal (18,2)");
 
             builder.HasData(
                 new Product
@@ -22,7 +22,7 @@ namespace Ecom.infrastructure.Data.Config
                     Id = 1,
                     Name = "Iphone 14",
                     Description = "This is the latest Iphone 14",
-                    Price = 1200,
+                    NEwPrice = 1200,
                     CategoryId = 1
                 }
                 );

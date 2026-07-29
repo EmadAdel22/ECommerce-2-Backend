@@ -7,6 +7,9 @@ using System.Text;
 using Ecom.infrastructure.Repositires;
 using Microsoft.EntityFrameworkCore;
 using Ecom.infrastructure.Data;
+using Ecom.core.Services;
+using Ecom.infrastructure.Repositires.Services;
+using Microsoft.Extensions.FileProviders;
 
 namespace Ecom.infrastructure
 {
@@ -30,6 +33,8 @@ namespace Ecom.infrastructure
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
+            services.AddSingleton<IImageManagerService, ImageManagerService>();
+            services.AddSingleton < IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"wwwroot")));
             // aply Dbcontext
 
             services.AddDbContext<AppDbContext>((DbContextOptionsBuilder op) =>

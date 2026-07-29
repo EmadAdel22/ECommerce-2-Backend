@@ -4,7 +4,6 @@ using Ecom.core.Dtos;
 using Ecom.core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 namespace Ecom.Api.Controllers
 {
 
@@ -46,6 +45,23 @@ namespace Ecom.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpPost("add-product")]
+        public async Task<IActionResult> AddProduct(addProductDTO productDTO)
+        {
+            try
+            {
+               await work.ProductRepository.AddAsync(productDTO);
+                return Ok(new ResponseAPI(200, "Product Added Successfully"));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
             }
 
         }

@@ -11,7 +11,9 @@ namespace Ecom.core.Entities.Products
 
         public string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal NEwPrice { get; set; }
+        public decimal OldPrice { get; set; }
+
 
         public List<Photo> Photos { get; set; }
 
