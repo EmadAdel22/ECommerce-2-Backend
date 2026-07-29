@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Ecom.Api.Helper;
 using Ecom.Api.Mapping;
+using Ecom.core.Dtos;
 using Ecom.core.Entities.Products;
 using Ecom.core.Interfaces;
-using Ecom.infrastructure.Dtos;
+using Ecom.infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Ecom.Api.Controllers
 {

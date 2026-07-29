@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Ecom.core.Dtos;
 using Ecom.core.Entities.Products;
-using Ecom.infrastructure.Dtos;
+using Ecom.infrastructure;
+
 namespace Ecom.Api.Mapping
 {
     public class CategoryMapping : Profile
