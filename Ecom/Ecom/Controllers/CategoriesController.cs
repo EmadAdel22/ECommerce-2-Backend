@@ -99,7 +99,7 @@ namespace Ecom.Api.Controllers
         {
             try
             {
-                await work.categoryRepository.Deletsync(id);
+                await work.categoryRepository.DeleteAsync(id);
                 return Ok(new ResponseAPI(200, "category has been Deleted"));
             }
             catch (Exception ex)

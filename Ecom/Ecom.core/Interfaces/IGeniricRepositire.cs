@@ -20,7 +20,7 @@ namespace Ecom.core.Interfaces
 
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task Deletsync(int id);
+        Task DeleteAsync(int id);
 
     }
 }

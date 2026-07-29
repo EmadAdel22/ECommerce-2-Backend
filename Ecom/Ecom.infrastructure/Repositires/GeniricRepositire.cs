@@ -24,7 +24,7 @@ namespace Ecom.infrastructure.Repositires
             await _context.SaveChangesAsync();
         }
 
-        public async Task Deletsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var etentity = await _context.Set<T>().FindAsync(id);
 

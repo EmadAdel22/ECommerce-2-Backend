@@ -52,6 +52,19 @@ namespace Ecom.infrastructure.Repositires
 
         }
 
+        public async Task DeleteAsync(Product product)
+        {
+            var findPhoto = await context.Photos.Where(m => m.ProductId == product.Id).ToListAsync();
+
+            foreach (var photo in findPhoto)
+            {
+                imageManagerService.DeletImageAsync(photo.Name);
+            }
+
+             context.Products.Remove(product);
+            await context.SaveChangesAsync();
+        }
+
         public async Task<bool> UpdateAsync(ProductUpdateDTO updateproductDTO)
         {
 
