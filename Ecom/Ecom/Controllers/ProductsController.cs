@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecom.Api.Controllers
 {
-   
+
     public class ProductsController : BaseController
     {
         public ProductsController(IUnitOfWork work, IMapper mapper) : base(work, mapper)
@@ -20,7 +20,7 @@ namespace Ecom.Api.Controllers
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync(x => x.Category, x=> x.Photos);
+                var products = await work.ProductRepository.GetAllAsync(x => x.Category, x => x.Photos);
                 var result = mapper.Map<List<ProductDTO>>(products);
                 if (products == null)
                     return BadRequest(new ResponseAPI(400));
@@ -32,5 +32,22 @@ namespace Ecom.Api.Controllers
             }
         }
 
+        [HttpGet("get-by-Id/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            try
+            {
+                var product = await work.ProductRepository.GetByIdAsync(id, x => x.Category, x => x.Photos);
+                var result = mapper.Map<ProductDTO>(product);
+                if (product == null)
+                    return BadRequest(new ResponseAPI(400));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
