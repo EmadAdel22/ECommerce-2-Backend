@@ -38,4 +38,10 @@ namespace Ecom.core.Dtos
 
         public IFormFileCollection Photo { get; set; }
     }
+
+    public  record  ProductUpdateDTO : addProductDTO
+    {
+     
+        public int Id { get; set; }
+    }
 }

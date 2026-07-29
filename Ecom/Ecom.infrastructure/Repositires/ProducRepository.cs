@@ -50,6 +50,42 @@ namespace Ecom.infrastructure.Repositires
             return true;
 
 
+        }
+
+        public async Task<bool> UpdateAsync(ProductUpdateDTO updateproductDTO)
+        {
+
+            if (updateproductDTO == null) return false;
+
+            var Findproduct = await context.Products.Include(x => x.Category)
+                .Include(x => x.Photos)
+                .FirstOrDefaultAsync(x => x.Id == updateproductDTO.Id);
+            if(Findproduct == null) return false;
+
+            mapper.Map(updateproductDTO, Findproduct);
+
+            var findPhoto = await context.Photos.Where(m=>m.ProductId == updateproductDTO.Id).ToArrayAsync();
+
+            foreach (var photo in findPhoto)
+            {
+                 imageManagerService.DeletImageAsync(photo.Name);
+               
+            }
+            context.Photos.RemoveRange(findPhoto);
+
+            var  ImagePath = await imageManagerService.AddImageAysnc(updateproductDTO.Photo, updateproductDTO.Name);
+
+            var photoList = ImagePath.Select(path => new Photo
+            {
+                Name = path,
+                ProductId = updateproductDTO.Id
+            }).ToList();
+
+            await context.Photos.AddRangeAsync(photoList);
+
+            await context.SaveChangesAsync();
+            return true;
+
 
 
         }

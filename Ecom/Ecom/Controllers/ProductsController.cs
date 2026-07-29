@@ -65,5 +65,19 @@ namespace Ecom.Api.Controllers
             }
 
         }
+
+        [HttpPut("update-product")]
+        public async Task<IActionResult> UpdateProduct(ProductUpdateDTO updateproductDTO)
+        {
+            try
+            {
+                await work.ProductRepository.UpdateAsync(updateproductDTO);
+                return Ok(new ResponseAPI(200, "Product Updated Successfully"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
