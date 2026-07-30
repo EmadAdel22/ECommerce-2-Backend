@@ -5,6 +5,7 @@ using Ecom.core.Entities.Products;
 using Ecom.core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ecom.core.Sharing;
 namespace Ecom.Api.Controllers
 {
 
@@ -16,12 +17,12 @@ namespace Ecom.Api.Controllers
 
         [HttpGet("get-all")]
 
-        public async Task<IActionResult> GetAllProducts(string? sort , int? CategoryId)
+        public async Task<IActionResult> GetAllProducts([FromQuery]ProducParams producParams)
         {
             try
             {
                 var products = await work.ProductRepository
-                    .GetAllAsync(sort , CategoryId);
+                    .GetAllAsync(producParams);
                 
                 return Ok(products);
             }
