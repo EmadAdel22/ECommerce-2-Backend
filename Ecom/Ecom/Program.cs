@@ -1,3 +1,4 @@
+using Ecom.Api.Middelwars;
 using Ecom.infrastructure;
 namespace Ecom
 {
@@ -29,6 +30,8 @@ namespace Ecom
             //    app.MapOpenApi();
             //}
             // Swagger
+
+            app.UseMiddleware<midelwarExptions>();
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseSwagger();
