@@ -5,6 +5,7 @@ using Ecom.core.Interfaces;
 using Ecom.core.Services;
 using Ecom.infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -101,6 +102,35 @@ namespace Ecom.infrastructure.Repositires
 
 
 
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId)
+        {
+            var query = context.Products.Include(m => m.Category)
+                .Include(m => m.Photos)
+                .AsNoTracking();
+
+            if (CategoryId.HasValue)
+                query = query.Where(m => m.CategoryId == CategoryId);
+            if(!String.IsNullOrEmpty(sort))
+            {
+                switch(sort)
+                {
+                    case "PriceAC":
+                        query = query.OrderBy(m=> m.NEwPrice);
+                        break;
+                    case "PriceDes":
+                        query = query.OrderByDescending(m=> m.NEwPrice);
+                        break;
+                    default:
+                        query = query.OrderBy(m => m.Name);
+                        break;
+
+                }
+            }
+
+            var result = mapper.Map<List<ProductDTO>>(query);
+            return result;
         }
     }
 }

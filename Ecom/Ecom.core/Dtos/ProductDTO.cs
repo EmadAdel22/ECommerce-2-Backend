@@ -12,8 +12,8 @@ namespace Ecom.core.Dtos
 
         public string Description { get; set; }
 
-        public decimal Price { get; set; }
-
+        public decimal NEwPrice { get; set; }
+        public decimal OldPrice { get; set; }
         public List<PhotoDTO> Photos { get; set; } 
 
         public string CategoryName { get; set; }

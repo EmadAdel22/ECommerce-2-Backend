@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ecom.Api.Helper;
 using Ecom.core.Dtos;
+using Ecom.core.Entities.Products;
 using Ecom.core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,14 @@ namespace Ecom.Api.Controllers
 
         [HttpGet("get-all")]
 
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(string? sort , int? CategoryId)
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync(x => x.Category, x => x.Photos);
-                var result = mapper.Map<List<ProductDTO>>(products);
-                if (products == null)
-                    return BadRequest(new ResponseAPI(400));
-                return Ok(result);
+                var products = await work.ProductRepository
+                    .GetAllAsync(sort , CategoryId);
+                
+                return Ok(products);
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace Ecom.Api.Controllers
         }
 
         [HttpPost("add-product")]
-        public async Task<IActionResult> AddProduct(addProductDTO productDTO)
+        public async Task<IActionResult> AddProduct([FromForm] addProductDTO productDTO)
         {
             try
             {
