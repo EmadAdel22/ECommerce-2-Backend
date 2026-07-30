@@ -29,11 +29,14 @@ namespace Ecom
             //    app.MapOpenApi();
             //}
             // Swagger
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
 
 
             app.MapControllers();
