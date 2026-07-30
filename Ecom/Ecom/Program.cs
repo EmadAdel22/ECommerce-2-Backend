@@ -9,7 +9,7 @@ namespace Ecom
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -30,12 +30,12 @@ namespace Ecom
             //    app.MapOpenApi();
             //}
             // Swagger
-
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseMiddleware<midelwarExptions>();
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
