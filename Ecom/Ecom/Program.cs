@@ -8,6 +8,15 @@ namespace Ecom
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             // Add services to the container.
             builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
@@ -30,6 +39,7 @@ namespace Ecom
             //    app.MapOpenApi();
             //}
             // Swagger
+            app.UseCors("AllowAngular");
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseMiddleware<midelwarExptions>();
