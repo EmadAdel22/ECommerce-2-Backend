@@ -111,6 +111,16 @@ namespace Ecom.infrastructure.Repositires
                 .Include(m => m.Photos)
                 .AsNoTracking();
 
+            if(!string.IsNullOrEmpty(producParams.search))
+            {
+                var serchWord = producParams.search.Split(' ');
+                query = query.Where(m => serchWord.All(word => m.Name.ToLower().Contains(word.ToLower()) 
+                || m.Description.ToLower().Contains(word.ToLower())));
+
+            }
+
+
+
             if (producParams.CategoryId.HasValue)
                 query = query.Where(m => m.CategoryId == producParams.CategoryId);
             if(!String.IsNullOrEmpty(producParams.sort))
