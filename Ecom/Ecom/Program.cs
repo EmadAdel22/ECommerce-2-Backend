@@ -43,6 +43,7 @@ namespace Ecom
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseMiddleware<midelwarExptions>();
+            app.c();
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             
