@@ -9,7 +9,7 @@ namespace Ecom.core.Interfaces
 {
     public interface IProductRepository : IGeniricRepositire<Product>
     {
-        Task<IEnumerable<ProductDTO>> GetAllAsync(ProducParams producParams );
+        Task<ReturnProductDTO> GetAllAsync(ProducParams producParams );
 
         Task<bool> AddAsync(addProductDTO productDTO);
         Task<bool> UpdateAsync(ProductUpdateDTO updateproductDTO);

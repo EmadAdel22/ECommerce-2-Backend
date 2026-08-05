@@ -19,6 +19,12 @@ namespace Ecom.core.Dtos
         public string CategoryName { get; set; }
     }
 
+    public class ReturnProductDTO
+    {
+        public List<ProductDTO> Products { get; set; }
+        public int TotalCount { get; set; }
+
+    }
     public record PhotoDTO
     {
         public string ImageName { get; set; }

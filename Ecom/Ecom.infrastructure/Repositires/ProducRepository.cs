@@ -105,7 +105,7 @@ namespace Ecom.infrastructure.Repositires
 
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllAsync(ProducParams producParams)
+        public async Task<ReturnProductDTO> GetAllAsync(ProducParams producParams)
         {
             var query = context.Products.Include(m => m.Category)
                 .Include(m => m.Photos)
@@ -133,12 +133,14 @@ namespace Ecom.infrastructure.Repositires
                 };
             }
 
-      
+            ReturnProductDTO returnProductDTO = new ReturnProductDTO();
+
+            returnProductDTO.TotalCount =  query.Count();
 
             query = query.Skip((producParams.PageSize) * (producParams.PageNumbre - 1)).Take(producParams.PageSize);
 
-            var result = mapper.Map<List<ProductDTO>>(query);
-            return result;
+            returnProductDTO.Products = mapper.Map<List<ProductDTO>>(query);
+            return returnProductDTO;
         }
     }
 }
