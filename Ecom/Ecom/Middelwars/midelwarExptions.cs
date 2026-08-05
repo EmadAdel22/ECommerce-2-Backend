@@ -30,6 +30,8 @@ namespace Ecom.Api.Middelwars
                     context.Response.ContentType = "application/json";
                     var response = new APIExeption((int)HttpStatusCode.TooManyRequests, "Too many requests. Please try again later.");
                     await context.Response.WriteAsJsonAsync(response);
+                    return;
+
                 }
                 await _next(context);
             }
