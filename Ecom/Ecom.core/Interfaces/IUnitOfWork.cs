@@ -11,6 +11,8 @@ namespace Ecom.core.Interfaces
 
         public IPhotoRepository photoRepository { get; }
 
-        
+        public IcustomerBasketReposatory customerBasketReposatory { get; }
+
+
     }
 }

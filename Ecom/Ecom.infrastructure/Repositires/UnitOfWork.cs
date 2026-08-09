@@ -19,6 +19,9 @@ namespace Ecom.infrastructure.Repositires
         public IProductRepository ProductRepository { get; }
         public IPhotoRepository photoRepository { get; }
 
+        public IcustomerBasketReposatory customerBasketReposatory { get; }
+
+
         public UnitOfWork(AppDbContext context, IMapper mapper, IImageManagerService imageManagerService)
         {
 
@@ -28,7 +31,9 @@ namespace Ecom.infrastructure.Repositires
             categoryRepository = new CategoryRepository(_context);
             ProductRepository = new ProducRepository(_context , _mapper, _imageManagerService);
             photoRepository = new PhotoReposatory(_context);
-        
+            customerBasketReposatory = new customerBasketReposatory();
+
+
         }
     }
 }
