@@ -1,15 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Ecom.core.Interfaces;
+using Ecom.core.Services;
+using Ecom.infrastructure.Data;
+using Ecom.infrastructure.Repositires;
+using Ecom.infrastructure.Repositires.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Ecom.core.Interfaces;
+using Microsoft.Extensions.FileProviders;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ecom.infrastructure.Repositires;
-using Microsoft.EntityFrameworkCore;
-using Ecom.infrastructure.Data;
-using Ecom.core.Services;
-using Ecom.infrastructure.Repositires.Services;
-using Microsoft.Extensions.FileProviders;
 
 namespace Ecom.infrastructure
 {
@@ -32,6 +33,15 @@ namespace Ecom.infrastructure
             // unit work 
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
+            // connection redis
+
+            services.AddSingleton<IConnectionMultiplexer>(i =>
+            {
+                var config = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(config);
+                   
+            });
 
             services.AddSingleton<IImageManagerService, ImageManagerService>();
             services.AddSingleton < IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"wwwroot")));
