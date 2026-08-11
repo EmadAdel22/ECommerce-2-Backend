@@ -12,11 +12,11 @@ namespace Ecom.core.Entities
             
         }
 
-        public CustmoerBasket(int id)
+        public CustmoerBasket(string id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public string Id { get; set; }
         public List<BasketItems> Items { get; set; } = new List<BasketItems>();
     }
 }
