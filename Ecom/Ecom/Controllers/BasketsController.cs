@@ -19,6 +19,10 @@ namespace Ecom.Api.Controllers
         public async Task<IActionResult> getBasketItems(string id)
         {
             var result = await work.customerBasketReposatory.GetBasketAsync(id);
+            if (result is null) {
+
+                return Ok(new CustmoerBasket());
+            }
             return Ok(result);
         }
 
